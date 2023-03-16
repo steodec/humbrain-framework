@@ -15,7 +15,7 @@ use Twig\Error\SyntaxError;
  * @author  Paul Tedesco <paul.tedesco@humbrain.com>
  * @version Release: 1.0.0
  */
-class TwigRenderer
+class TwigRenderer implements RendererInterface
 {
     private Environment $twig;
 
@@ -27,7 +27,7 @@ class TwigRenderer
     /**
      * Permet de rajouter un chamin pour charger les vues
      *
-     * @param string      $namespace
+     * @param string $namespace
      * @param null|string $path
      */
     final public function addPath(string $namespace, ?string $path = null): void
@@ -41,8 +41,8 @@ class TwigRenderer
      * $this->render('@blog/view');
      * $this->render('view');
      *
-     * @param  string $view
-     * @param  array  $params
+     * @param string $view
+     * @param array $params
      * @return string
      * @throws LoaderError
      * @throws RuntimeError
@@ -57,7 +57,7 @@ class TwigRenderer
      * Permet de rajouter des variables globales à toutes les vues
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      */
     final public function addGlobal(string $key, $value): void
     {
