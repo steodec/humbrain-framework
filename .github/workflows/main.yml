@@ -1,4 +1,4 @@
-name: CI-coverage
+name: Tests
 
 on: [push]
 
