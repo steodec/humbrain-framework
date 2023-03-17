@@ -185,7 +185,7 @@ trait ORM
      */
     final public function addLimit(int $limit): self
     {
-        $this->query = " LIMIT " . $limit;
+        $this->query .= " LIMIT " . $limit;
         return $this;
     }
 
