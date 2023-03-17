@@ -6,7 +6,7 @@
 
 namespace Humbrain\Framework\entities;
 
-use PDO;
+use pdo;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
@@ -17,7 +17,7 @@ use ReflectionProperty;
  */
 trait ORM
 {
-    private PDO $PDO;
+    private pdo $pdo;
     private string $query = "";
     private array $values = [];
 
@@ -27,7 +27,7 @@ trait ORM
     private bool $customFrom = false;
 
 
-    private function __construct(PDO $pdo)
+    public function __construct(pdo $pdo)
     {
         $this->pdo = $pdo;
     }//end __construct()
@@ -86,7 +86,7 @@ trait ORM
             $properties[$property->getName()] = $property->getValue($this);
         endforeach;
         $query .= $this->formatSet($properties);
-        $queryPdo = $this->PDO->prepare($query);
+        $queryPdo = $this->pdo->prepare($query);
         foreach ($properties as $key => $property) :
             $queryPdo->bindParam(":$key", $property, $this->getType($property));
         endforeach;
@@ -95,7 +95,7 @@ trait ORM
             throw new ORMException("Une erreur c'est produite lors de l'execution");
         endif;
         if (is_null($this->getId())) :
-            $this->id = $this->PDO->lastInsertId($this::TABLE_NAME);
+            $this->id = $this->pdo->lastInsertId($this::TABLE_NAME);
         endif;
         $result = $this->select()
             ->addWhereCase('id', OperatorEnum::EQUAL, $this->getId())
@@ -127,7 +127,7 @@ trait ORM
     }
 
     /**
-     * Return PDO type for bindParam
+     * Return pdo type for bindParam
      *
      * @param mixed $value
      *
@@ -137,10 +137,10 @@ trait ORM
     private function getType(mixed $value): int
     {
         return match (gettype($value)) {
-            "boolean" => PDO::PARAM_BOOL,
-            "double", "integer" => PDO::PARAM_INT,
-            "array", "object", "string" => PDO::PARAM_STR,
-            'NULL' => PDO::PARAM_NULL,
+            "boolean" => pdo::PARAM_BOOL,
+            "double", "integer" => pdo::PARAM_INT,
+            "array", "object", "string" => pdo::PARAM_STR,
+            'NULL' => pdo::PARAM_NULL,
             default => throw new ORMException('Unexpected value'),
         };
     }
@@ -156,21 +156,21 @@ trait ORM
     final public function execute(string $query = null): iterable|object
     {
         if (is_null($query)) :
-            $queryPDO = $this->PDO->prepare($this->query);
+            $querypdo = $this->pdo->prepare($this->query);
             foreach ($this->values as $key => $value) :
-                $queryPDO->bindParam(":$key", $value, $this->getType($value));
+                $querypdo->bindParam(":$key", $value, $this->getType($value));
             endforeach;
         else :
-            $queryPDO = $this->PDO->query($query);
+            $querypdo = $this->pdo->query($query);
         endif;
-        $result = $queryPDO->execute();
+        $result = $querypdo->execute();
         if (!$result) :
             throw new ORMException("Une erreur c'est produite");
         endif;
         if ($this->customFrom) :
-            $return = $queryPDO->fetchAll(PDO::FETCH_OBJ);
+            $return = $querypdo->fetchAll(pdo::FETCH_OBJ);
         else :
-            $return = $queryPDO->fetchAll(PDO::FETCH_CLASS, $this::class);
+            $return = $querypdo->fetchAll(pdo::FETCH_CLASS, $this::class);
         endif;
 
         return (count($return) > 1) ? $return : $return[0];
@@ -200,11 +200,12 @@ trait ORM
      * @return self
      */
     final public function addWhereCase(
-        string $property,
+        string       $property,
         OperatorEnum $operatorEnum,
-        mixed $value,
-        string $operator = "AND"
-    ): self {
+        mixed        $value,
+        string       $operator = "AND"
+    ): self
+    {
         if (!str_contains($this->query, 'FROM')) :
             $this->query .= sprintf(" FROM %s", $this::TABLE_NAME);
         endif;
