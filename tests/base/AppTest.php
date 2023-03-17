@@ -30,10 +30,19 @@ class AppTest extends TestCase
             ->pipe(NotFoundMiddleware::class);
     }
 
-    public function testRun()
+    /*
+        public function testRun()
+        {
+            $response = $this->app->run(new ServerRequest('GET', '/', []));
+            $this->assertEquals(200, $response->getStatusCode());
+            $this->assertEquals('toto', $response->getBody());
+        }
+    */
+
+    public function testRenderer()
     {
-        $response = $this->app->run(new ServerRequest('GET', '/', []));
+        $response = $this->app->run(new ServerRequest('GET', '/twig', []));
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('toto', $response->getBody());
+        $this->assertEquals('<h1>toto</h1>', $response->getBody());
     }
 }

@@ -84,7 +84,7 @@ class App
     final public function run(ServerRequestInterface $request): ResponseInterface
     {
         foreach ($this->modules as $module) {
-            $this->getContainer()->get($module);
+            $this->getContainer()->make($module, ['container' => $this->getContainer()]);
         }
         return $this->process($request);
     }

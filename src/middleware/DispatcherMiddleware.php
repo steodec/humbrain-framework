@@ -43,8 +43,9 @@ class DispatcherMiddleware implements MiddlewareInterface
             return $next($request);
         endif;
         $callback = $route->getCallback();
-        if (is_string($callback)) :
-            $callback = $this->container->get($callback);
+        if (is_array($callback)) :
+            $class = $this->container->get($callback[0]);
+            $callback = [$class, $callback[1]];
         endif;
         $response = call_user_func_array($callback, [$request]);
         if (is_string($response)) :

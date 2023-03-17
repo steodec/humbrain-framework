@@ -7,6 +7,7 @@
 namespace Humbrain\Framework\router;
 
 use AltoRouter;
+use DI\Container;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,6 +25,7 @@ class Router
      * @var AltoRouter
      */
     private AltoRouter $router;
+    private ContainerInterface $container;
 
     public function __construct()
     {
@@ -31,7 +33,7 @@ class Router
     }
 
     /**
-     * @param  ServerRequestInterface $request
+     * @param ServerRequestInterface $request
      * @return Route|null
      */
     final public function match(ServerRequestInterface $request): ?Route
@@ -48,8 +50,8 @@ class Router
     }
 
     /**
-     * @param  string $name
-     * @param  array  $params
+     * @param string $name
+     * @param array $params
      * @return string|null
      */
     final public function generateUri(string $name, array $params = []): ?string
@@ -62,7 +64,7 @@ class Router
     }
 
     /**
-     * @param  string[] $controllers
+     * @param string[] $controllers
      * @return void
      * @throws ReflectionException
      */
@@ -74,7 +76,7 @@ class Router
     }
 
     /**
-     * @param  string $controller
+     * @param string $controller
      * @return void
      * @throws ReflectionException
      * @throws Exception
@@ -82,7 +84,6 @@ class Router
     final public function register(string $controller): void
     {
         $reflectionController = new ReflectionClass($controller);
-        $callable = $reflectionController->newInstance();
         foreach ($reflectionController->getMethods() as $method) :
             $attributes = $method->getAttributes(attribute::class);
             foreach ($attributes as $attribute) :
@@ -96,7 +97,7 @@ class Router
                 $this->router->map(
                     $route->method->value,
                     $route->routePath,
-                    [$callable, $method->getName()],
+                    [$controller, $method->getName()],
                     $name
                 );
             endforeach;
