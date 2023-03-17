@@ -170,7 +170,7 @@ trait ORM
         if ($this->customFrom) :
             $return = $querypdo->fetchAll(pdo::FETCH_OBJ);
         else :
-            $return = $querypdo->fetchAll(pdo::FETCH_CLASS, $this::class);
+            $return = $querypdo->fetchAll(pdo::FETCH_CLASS);
         endif;
 
         return (count($return) > 0) ?
