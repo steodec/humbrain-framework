@@ -173,7 +173,9 @@ trait ORM
             $return = $querypdo->fetchAll(pdo::FETCH_CLASS, $this::class);
         endif;
 
-        return (count($return) > 1) ? $return : $return[0];
+        return (count($return) > 0) ?
+            (count($return) > 1) ? $return : $return[0]
+            : throw new ORMException("Aucune entrée");
     }
 
     /**
