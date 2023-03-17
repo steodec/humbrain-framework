@@ -23,7 +23,7 @@ class AppTest extends TestCase
     public function setUp(): void
     {
         $this->app = new App(dirname(__DIR__) . '/base/config.php');
-        $this->app->addModule(ControllerTest::class)
+        $this->app->addModule(Controller::class)
             ->registerController()
             ->pipe(RouteMiddleware::class)
             ->pipe(DispatcherMiddleware::class)

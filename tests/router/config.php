@@ -5,10 +5,10 @@
  * Humbrain All right reserved.
  **/
 
-use Tests\router\ControllerTest;
+use Tests\router\Controller;
 
 return [
     "controllers" => [
-        ControllerTest::class
+        Controller::class
     ],
 ];

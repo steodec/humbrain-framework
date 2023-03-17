@@ -11,7 +11,7 @@ use GuzzleHttp\Psr7\Response;
 use Humbrain\Framework\router\attributes\Route;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ControllerTest
+class Controller
 {
     #[Route('/')]
     public final function index(ServerRequestInterface $resquest): Response

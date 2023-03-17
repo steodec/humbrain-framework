@@ -20,27 +20,27 @@ class RouterTest extends TestCase
 {
     private Router $router;
 
-    public final function setUp(): void
+    final public function setUp(): void
     {
         $this->router = new Router();
-        $this->router->register(ControllerTest::class);
+        $this->router->register(Controller::class);
     }
 
-    public final function testRoute(): void
+    final public function testRoute(): void
     {
         $routes = $this->router->match(new ServerRequest('GET', '/', []));
         $this->assertNotNull($routes, "Route not found");
     }
 
-    public final function testNotFoundRoute(): void
+    final public function testNotFoundRoute(): void
     {
         $routes = $this->router->match(new ServerRequest('GET', '/toto', []));
         $this->assertEquals(null, $routes);
     }
 
-    public final function testGenerateUri(): void
+    final public function testGenerateUri(): void
     {
-        $routes = $this->router->generateUri('controllertest.index');
+        $routes = $this->router->generateUri('controller.index');
         $this->assertEquals('/', $routes);
     }
 }

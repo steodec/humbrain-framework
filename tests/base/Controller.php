@@ -13,7 +13,7 @@ use Humbrain\Framework\views\RendererInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ControllerTest
+class Controller
 {
     public const DEFINITIONS = null;
     private RendererInterface $renderer;
