@@ -11,5 +11,6 @@ use Psr\Container\ContainerInterface;
 
 interface InterfaceControllers
 {
+
     public function __construct(ContainerInterface $container);
 }

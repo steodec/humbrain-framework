@@ -1,0 +1,1 @@
+{"version":1,"defects":[],"times":{"Tests\\base\\AppTest::testRenderer":0.031,"Tests\\router\\RouterTest::testRoute":0.001,"Tests\\router\\RouterTest::testNotFoundRoute":0,"Tests\\router\\RouterTest::testGenerateUri":0}}
