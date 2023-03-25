@@ -4,7 +4,7 @@
  * Humbrain All right reserved.
  **/
 
-namespace Humbrain\Framework\entities;
+namespace Humbrain\Framework\data\entities;
 
 use Exception;
 use PDO;
