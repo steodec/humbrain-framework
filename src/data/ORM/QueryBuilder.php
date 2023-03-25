@@ -62,7 +62,7 @@ class QueryBuilder
         return $this;
     }
 
-    final public function where(string $field, string $operator, string $value, string $andOrOr = "AND"): QueryBuilder
+    final public function where(string $field, string $operator, mixed $value, string $andOrOr = "AND"): QueryBuilder
     {
         $this->where[] = [
             'field' => $field,
@@ -74,7 +74,7 @@ class QueryBuilder
         return $this;
     }
 
-    final public function addData(string $column, string $value): QueryBuilder
+    final public function addData(string $column, mixed $value): QueryBuilder
     {
         $this->data[] = [
             'column' => $column,

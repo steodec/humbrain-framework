@@ -41,7 +41,7 @@ abstract class AbstractRepository
     {
         $queryBuilder = $this
             ->queryBuilder
-            ->select()
+            ->select(null, "*")
             ->where('id', '=', $id);
         $query = $this->db->prepare($queryBuilder->getQuery());
         $this->bindParams($query, $queryBuilder->getValues());
@@ -88,7 +88,7 @@ abstract class AbstractRepository
     {
         $queryBuilder = $this
             ->queryBuilder
-            ->select();
+            ->select(null, "*");
         $query = $this->db->prepare($queryBuilder->getQuery());
         $query->execute();
         $query->setFetchMode(PDO::FETCH_CLASS, get_class($this->entity));
