@@ -61,7 +61,7 @@ abstract class AbstractRepository
             if (is_object($value) || is_array($value)) :
                 $value = json_encode($value);
             endif;
-            $query->bindParam($key, $value, $this->getPDOType($value));
+            $query->bindParam(($key + 1), $value, $this->getPDOType($value));
         }
     }
 
