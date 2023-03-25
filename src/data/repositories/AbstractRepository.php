@@ -58,8 +58,26 @@ abstract class AbstractRepository
     final protected function bindParams(PDOStatement $query, array $params): void
     {
         foreach ($params as $key => $value) {
-            $query->bindValue($key, $value);
+            if (is_object($value) || is_array($value)) :
+                $value = json_encode($value);
+            endif;
+            $query->bindParam($key, $value, $this->getPDOType($value));
         }
+    }
+
+    /**
+     * Get PDO type
+     * @param mixed $value
+     * @return int
+     */
+    final protected function getPDOType(mixed $value): int
+    {
+        return match (gettype($value)) {
+            'boolean' => PDO::PARAM_BOOL,
+            'integer' => PDO::PARAM_INT,
+            'NULL' => PDO::PARAM_NULL,
+            default => PDO::PARAM_STR,
+        };
     }
 
     /**
