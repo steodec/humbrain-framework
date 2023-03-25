@@ -75,7 +75,7 @@ abstract class AbstractEntities
      * @param QueryBuilder $query The query to prepare and execute.
      * @return PDOStatement The PDOStatement instance representing the prepared and executed query.
      */
-    private function prepareAndExecuteQuery(QueryBuilder $query): PDOStatement
+    protected function prepareAndExecuteQuery(QueryBuilder $query): PDOStatement
     {
         $sql = $query->getSQL();
         $stmt = $this->pdo->prepare($sql);
