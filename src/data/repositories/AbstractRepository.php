@@ -55,7 +55,7 @@ abstract class AbstractRepository
      * @param PDOStatement $query
      * @param array $params
      */
-    private function bindParams(PDOStatement $query, array $params): void
+    final protected function bindParams(PDOStatement $query, array $params): void
     {
         foreach ($params as $key => $value) {
             $query->bindValue($key, $value);
