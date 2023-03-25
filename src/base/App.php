@@ -99,6 +99,7 @@ class App
     {
         if ($this->container === null) {
             $builder = new ContainerBuilder();
+            $builder->useAttributes(true);
             $builder->addDefinitions($this->definitions);
             foreach ($this->modules as $module) {
                 if ($module::DEFINITIONS) {
