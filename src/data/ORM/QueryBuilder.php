@@ -29,7 +29,11 @@ class QueryBuilder
     {
         $this->query = 'SELECT ';
         $this->type = 'select';
-        $this->query .= implode(', ', $fields) ?? "*";
+        if (empty($fields)) {
+            $this->query .= '*';
+        } else {
+            $this->query .= implode(', ', $fields);
+        }
         $this->table = $table ?? $this->table;
         return $this;
     }
