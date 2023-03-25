@@ -9,7 +9,7 @@ namespace Humbrain\Framework\data\repositories;
 
 use DI\Attribute\Inject;
 use Humbrain\Framework\data\ORM\QueryBuilder;
-use Humbrain\Framework\entities\AbstractEntities;
+use Humbrain\Framework\data\entities\AbstractEntities;
 use PDO;
 use PDOStatement;
 
