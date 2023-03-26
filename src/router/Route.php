@@ -27,8 +27,8 @@ class Route
     private array $params;
 
     /**
-     * @param Method          $method
-     * @param string          $path
+     * @param Method $method
+     * @param string $path
      * @param callable|string $callback
      */
     public function __construct(string $path, callable|array $callback, array $params = [])
@@ -36,32 +36,6 @@ class Route
         $this->path = $path;
         $this->callback = $callback;
         $this->params = $params;
-    }
-
-    /**
-     * @return Method
-     */
-    final public function getMethod(): Method
-    {
-        return $this->method;
-    }
-
-    /**
-     * @param  Method $method
-     * @return Route
-     */
-    final public function setMethod(Method $method): Route
-    {
-        $this->method = $method;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    final public function getMethodString(): string
-    {
-        return $this->method->value;
     }
 
     /**
@@ -73,7 +47,7 @@ class Route
     }
 
     /**
-     * @param  string $path
+     * @param string $path
      * @return Route
      */
     final public function setPath(string $path): Route
@@ -91,10 +65,10 @@ class Route
     }
 
     /**
-     * @param  callable|string $callback
+     * @param callable|string $callback
      * @return Route
      */
-    public function setCallback(callable|string $callback): Route
+    public function setCallback(callable|array $callback): Route
     {
         $this->callback = $callback;
         return $this;

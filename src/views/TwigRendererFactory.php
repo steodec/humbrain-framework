@@ -27,7 +27,8 @@ class TwigRendererFactory
         );
         $twig->addExtension(new DebugExtension());
         if ($container->has('twig.extensions')) {
-            foreach ($container->get('twig.extensions') as $extension) {
+            foreach ($container->get('twig.extensions') as $extensionStr) {
+                $extension = $container->get($extensionStr);
                 $twig->addExtension($extension);
             }
         }

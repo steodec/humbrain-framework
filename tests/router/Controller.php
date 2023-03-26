@@ -14,7 +14,13 @@ use Psr\Http\Message\ServerRequestInterface;
 class Controller
 {
     #[Route('/')]
-    public final function index(ServerRequestInterface $resquest): Response
+    final public function index(ServerRequestInterface $resquest): Response
+    {
+        return new Response(200, [], 'toto');
+    }
+
+    #[Route('/toto')]
+    final public function toto(ServerRequestInterface $resquest): Response
     {
         return new Response(200, [], 'toto');
     }

@@ -7,14 +7,11 @@
 
 namespace Tests\base;
 
-use DI\ContainerBuilder;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\ServerRequest;
 use Humbrain\Framework\base\App;
-use Humbrain\Framework\middleware\DispatcherMiddleware;
-use Humbrain\Framework\middleware\NotFoundMiddleware;
-use Humbrain\Framework\middleware\RouteMiddleware;
+use Humbrain\Framework\middleware\{DispatcherMiddleware, NotFoundMiddleware, RouteMiddleware};
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Logging\Exception;
 
 class AppTest extends TestCase
 {
@@ -44,5 +41,24 @@ class AppTest extends TestCase
         $response = $this->app->run(new ServerRequest('GET', '/twig', []));
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('<h1>toto</h1>', $response->getBody());
+    }
+
+    public function testNoMiddleWare()
+    {
+        $this->expectException(\Exception::class);
+        $this->app = new App(dirname(__DIR__) . '/base/config.php');
+        $this->app->addModule(Controller::class)
+            ->registerController();
+        $response = $this->app->run(new ServerRequest('GET', '/twig', []));
+    }
+
+    public function testBadMiddleWare()
+    {
+        $this->expectException(\Exception::class);
+        $this->app = new App(dirname(__DIR__) . '/base/config.php');
+        $this->app->addModule(Controller::class)
+            ->registerController()
+            ->pipe(\stdClass::class);
+        $response = $this->app->run(new ServerRequest('GET', '/twig', []));
     }
 }

@@ -8,7 +8,6 @@
 namespace Tests\router;
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
-use DI\ContainerBuilder;
 use GuzzleHttp\Psr7\ServerRequest;
 use Humbrain\Framework\router\Router;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +33,7 @@ class RouterTest extends TestCase
 
     final public function testNotFoundRoute(): void
     {
-        $routes = $this->router->match(new ServerRequest('GET', '/toto', []));
+        $routes = $this->router->match(new ServerRequest('GET', '/toto400', []));
         $this->assertEquals(null, $routes);
     }
 
@@ -42,5 +41,18 @@ class RouterTest extends TestCase
     {
         $routes = $this->router->generateUri('controller.index');
         $this->assertEquals('/', $routes);
+    }
+
+    final public function testGenerateUriNull(): void
+    {
+        $routes = $this->router->generateUri('controller.index2');
+        $this->assertEquals(null, $routes);
+    }
+
+    final public function testGetMethod(): void
+    {
+        $routes = $this->router->match(new ServerRequest('GET', '/', []));
+        $this->assertEquals('controller.index', $routes->getPath());
+        $this->assertEquals([Controller::class, 'index'], $routes->getCallback());
     }
 }

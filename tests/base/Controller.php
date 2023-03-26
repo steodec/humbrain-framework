@@ -15,13 +15,14 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class Controller
 {
-    public const DEFINITIONS = null;
+    public const DEFINITIONS = __DIR__ . '/config.php';
     private RendererInterface $renderer;
 
     public function __construct(ContainerInterface $container)
     {
         $this->renderer = $container->get(RendererInterface::class);
         $this->renderer->addPath('home', __DIR__ . '/views/home');
+        $this->renderer->addGlobal('title', 'toto');
     }
 
     #[Route('/')]
