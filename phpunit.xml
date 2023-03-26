@@ -5,6 +5,9 @@
         <include>
             <directory suffix=".php">src/</directory>
         </include>
+        <report>
+            <clover outputFile="clover.xml" />
+        </report>
     </coverage>
     <testsuites>
         <testsuite name="Test project">
