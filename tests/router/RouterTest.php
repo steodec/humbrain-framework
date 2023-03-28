@@ -31,6 +31,12 @@ class RouterTest extends TestCase
         $this->assertNotNull($routes, "Route not found");
     }
 
+    final public function testRouteRepeat(): void
+    {
+        $routes = $this->router->match(new ServerRequest('GET', '/tata', []));
+        $this->assertNotNull($routes, "Route not found");
+    }
+
     final public function testNotFoundRoute(): void
     {
         $routes = $this->router->match(new ServerRequest('GET', '/toto400', []));
