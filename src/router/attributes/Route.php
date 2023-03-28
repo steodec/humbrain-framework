@@ -13,7 +13,7 @@ use Humbrain\Framework\router\Method;
  * @author  Paul Tedesco <paul.tedesco@humbrain.com>
  * @version Release: 1.0.0
  */
-#[Attribute]
+#[Attribute(Attribute::TARGET_METHOD, Attribute::IS_REPEATABLE)]
 class Route
 {
     public string $routePath;
