@@ -18,6 +18,7 @@ class QueryBuilder
     private array $offset = [];
     private string $table;
     private array $data = [];
+    private array $whereData = [];
     private string $type;
 
     public function __construct(string $table)
@@ -70,7 +71,16 @@ class QueryBuilder
             'value' => $value,
             'andOrOr' => $andOrOr
         ];
-        $this->addData($field, $value);
+        $this->addWhereData($field, $value);
+        return $this;
+    }
+
+    final public function addWhereData(string $column, mixed $value): QueryBuilder
+    {
+        $this->whereData[] = [
+            'column' => $column,
+            'value' => $value
+        ];
         return $this;
     }
 
@@ -170,6 +180,7 @@ class QueryBuilder
 
     final public function getValues(): array
     {
-        return array_map(fn($data) => $data['value'], $this->data);
+        $data = array_merge($this->data, $this->whereData);
+        return array_map(fn($data) => $data['value'], $data);
     }
 }
