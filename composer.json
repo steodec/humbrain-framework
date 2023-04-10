@@ -2,7 +2,7 @@
   "name": "humbrain/framework",
   "description": "Framework PHP for intern project",
   "type": "library",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "require": {
     "php": "8.*",
     "php-di/php-di": "^7.0.2",
