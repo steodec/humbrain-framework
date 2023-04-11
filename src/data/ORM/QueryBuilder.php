@@ -185,6 +185,9 @@ class QueryBuilder
     final public function getValues(): array
     {
         $data = array_merge($this->data, $this->whereData);
-        return array_merge(array_map(fn($data) => [strtolower($data['column']) => $data['value']], $data));
+        $result = array_map(function ($item) {
+            return [$item['column'] => $item['value']];
+        }, $data);
+        return call_user_func_array('array_merge', $result);
     }
 }
