@@ -186,7 +186,8 @@ class QueryBuilder
     {
         $data = array_merge($this->data, $this->whereData);
         $result = array_map(function ($item) {
-            return [$item['column'] => $item['value']];
+            $dataKey = strtolower($item['column']);
+            return [$dataKey => $item['value']];
         }, $data);
         return call_user_func_array('array_merge', $result);
     }
