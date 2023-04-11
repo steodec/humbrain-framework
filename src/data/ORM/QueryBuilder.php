@@ -156,7 +156,7 @@ class QueryBuilder
         if (!empty($this->where)) {
             $this->query .= " WHERE ";
             foreach ($this->where as $where) {
-                $this->query .= "{$where['field']} {$where['operator']} ? {$where['andOrOr']} ";
+                $this->query .= "{$where['field']} {$where['operator']} :{$where['field']} {$where['andOrOr']} ";
             }
             $this->query = rtrim($this->query, 'AND ');
             $this->query = rtrim($this->query, 'OR ');
@@ -166,7 +166,7 @@ class QueryBuilder
     private function saveQuery(): string
     {
         $this->query .= "{$this->table} SET ";
-        $this->query .= implode(', ', array_map(fn($data) => "{$data['column']} = ?", $this->data));
+        $this->query .= implode(', ', array_map(fn($data) => "{$data['column']} = :{$data['column']}", $this->data));
         $this->whereBuilder();
         return $this->query;
     }
@@ -181,6 +181,6 @@ class QueryBuilder
     final public function getValues(): array
     {
         $data = array_merge($this->data, $this->whereData);
-        return array_map(fn($data) => $data['value'], $data);
+        return array_map(fn($data) => [$data['column'] => $data['value']], $data);
     }
 }
